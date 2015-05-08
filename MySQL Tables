@@ -1,0 +1,3 @@
+create table messages(nickname varchar(20), datetime datetime, position tinyint, message text);
+create table timeid(datetime datetime primary key not null, counter tinyint);
+create table onlineusers(session_id varchar(255), nickname varchar(20), datetime datetime);

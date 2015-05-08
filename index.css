@@ -1,0 +1,139 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "Courier New", Courier, monospace;
+}
+
+body {
+	background-color: #CCD6F5;
+}
+
+#main {
+	display: inline;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 90%;
+}
+
+#onlineUsers {
+	display: inline;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 10%;
+	border-style: solid;
+	border-left-width: 1px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-color: #E6E6E6;
+}
+
+#userList {
+	position: absolute;
+	right: 0px;
+	width: 100%;
+	border-style: solid;
+	border-left-width: 1px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-color: #E6E6E6;
+	overflow: auto;
+}
+
+#ouHeading {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	border-style: solid;
+	border-left-width: 1px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-color: #E6E6E6;
+	overflow: hidden;
+}
+
+#topBar {
+	position: absolute;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	background-color: #DFC9E7;
+}
+
+#settings {
+	position: absolute;
+	right: 0px;
+}
+
+#settingsMenu {
+	position: absolute;
+	width: 100%;
+	display: none;
+	left: 0px;
+	z-index: 1;
+	background-color: black;
+	color: white;
+	padding: 10px;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+}
+
+#setOpacity {
+	position: relative;
+	top: 6px;
+}
+
+#messages {
+	top: 0px;
+	left: 0px;
+	word-wrap: break-word;
+	overflow: auto;
+	width: 100%;
+	border-style: solid;
+	border-width: 1px;
+	border-right-width: 0px;
+	border-color: #E6E6E6;
+	position: absolute;
+	z-index: 0;
+}
+
+.nickname {
+	background-color: white;
+}
+
+.message {
+	border-style: solid;
+	border-bottom-width: 1px;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-color: #E6E6E6;
+}
+
+#messageBar {
+	left: 0px;
+	width: 100%;
+	position: absolute;
+}
+
+#send {
+	position: absolute;
+	right: 0px;
+	width: 5%;
+}
+
+#textField {
+	width: 95%;
+	position: absolute;
+	left: 0px;
+}
