@@ -26,6 +26,15 @@
 		file_put_contents("online", "");
 	}
 	
+	$file_contents = file_get_contents("online");
+	
+	if($file_contents === "") {
+		file_put_contents("online", $nickname . data_sep . $datetime);
+		file_put_contents("online.lock", "false");
+		echo json_encode(array($nickname));
+		exit();		
+	}
+	
 	while(true) {
 		$lock_contents = file_get_contents("online.lock");
 		if($lock_contents === "true") {
@@ -46,13 +55,7 @@
 		$final_array[] = implode(data_sep, $u);
 	}
 	
-	$file_contents = file_get_contents("online");
-	
-	if($file_contents === "") {
-		file_put_contents("online", $nickname . data_sep . $datetime);
-		file_put_contents("online.lock", "false");
-		exit();		
-	}
+
 		
 	$preTime = time() - preSecs;
 	$predatetime = date("Y-m-d H:i:s", $preTime);

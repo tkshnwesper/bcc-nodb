@@ -2,7 +2,7 @@
 
 	define("msg_seperator", "@(mN@n9");
 	define("data_sep", "g5eh32^");
-	define("max_stack_size", 15);
+	define("max_stack_size", 20);
 
 	function msleep($t) {
 		usleep($t * 1000);
@@ -16,8 +16,18 @@
 		die("Error in fetching message");
 	}
 	
-	if(!file_exists("messages.lock")) {
+	if(!file_exists("messages")) {
+		file_put_contents("messages", "");
+	}
+	
+	$datetime = date("Y-m-d H:i:s");
+	
+	$complete_file = file_get_contents("messages");
+	if($complete_file === "") {
+		file_put_contents("messages", implode(data_sep, array(md5($message . msg_seperator . data_sep), $datetime, $nickname, $message)));
 		file_put_contents("messages.lock", "false");
+		echo json_encode(array("success" => true));
+		exit();
 	}
 	
 	
@@ -37,18 +47,8 @@
 
 <?php
 
-	$time = date("i:s");
-	
-	if(file_exists("messages")) {
-		$md5 = md5_file("messages");
-		$complete_file = file_get_contents("messages");
-	}
-	else {
-		file_put_contents("messages", implode(data_sep, array(md5($message . msg_seperator . data_sep), $time, $nickname, $message)));
-		file_put_contents("messages.lock", "false");
-		echo json_encode(array("success" => true));
-		exit();
-	}
+
+	$md5 = uniqid();
 	$msg_array_raw = explode(msg_seperator, $complete_file);
 	$msg_array = array();
 	
@@ -64,7 +64,7 @@
 	if(sizeof($msg_array) >= max_stack_size) {
 		array_pop($msg_array);
 	}
-	$msg_string_array = array("md5" => $md5, "time" => $time, "nickname" => $nickname, "message" => $message);
+	$msg_string_array = array("md5" => $md5, "time" => $datetime, "nickname" => $nickname, "message" => $message);
 	array_unshift($msg_array, $msg_string_array);
 	
 	$final_string_array = array();
@@ -76,6 +76,7 @@
 	file_put_contents("messages", $final_string);
 	file_put_contents("messages.lock", "false");
 	
-	echo json_encode(array("success" => true));
+	//~ echo json_encode(array("success" => true));
+	echo json_encode($msg_array);
 	
 ?>

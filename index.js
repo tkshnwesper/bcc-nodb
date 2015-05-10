@@ -46,7 +46,13 @@ function setNick() {
 				newnick: finalVal,
 				oldnick: nickname
 			},
-			type: "GET"
+			dataType: "json",
+			type: "GET",
+			success: function(json) {
+				if(json.success === "true") {
+					nickname = finalVal;
+				}
+			}
 		});
 	}
 	document.getElementById("nickField").value = "";
@@ -175,6 +181,9 @@ $(document).ready(function() {
 	function getMessage() {
 		$.ajax({
 			url: "GetMessage.php",
+			data: {
+				nickname: nickname
+			},
 			type: "GET",
 			dataType: "json",
 			success: function(json) {
@@ -221,7 +230,7 @@ $(document).ready(function() {
 	
 	getNewNick();
 
-	setInterval(getMessage, 1500);
+	setInterval(getMessage, 2000);
 	setInterval(calibrateScreen, 2000);
-	setInterval(updateAndFetch, 5000);
+	setInterval(updateAndFetch, 8000);
 });

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+<!--
 		<script src="https://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+-->
+		<script src="jquery.min.js" type="text/javascript"></script>
+		<script src="index.js" type="text/javascript"></script>
+<!--
 		<script src="https://raw.githubusercontent.com/tkshnwesper/tkshnwesper.github.io/master/anifun/chat/index.js" type="text/javascript"></script>
+-->
 		<link rel="stylesheet" type="text/css" href="index.css">
 	</head>
 	<body>

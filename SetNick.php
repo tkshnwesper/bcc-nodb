@@ -1,34 +1,57 @@
 <?php
-	
-	(isset($_GET["oldnick"]) and isset($_GET["newnick"]) or die("Error in fetching message");
-	
-?>
 
-<?php
+	define("user_sep", "3sxDS>");
+	define("data_sep", "ck@&k`");
 	
-	function execQuery($sql) {
-		global $conn;
-		$res = mysql_query($sql, $conn);
-		return $res;
+	(isset($_GET["oldnick"]) and isset($_GET["newnick"])) or die("Error in fetching message");
+	$oldnick = $_GET["oldnick"];
+	$newnick = $_GET["newnick"];
+	
+	
+	if(!file_exists("online.lock")) {
+		file_put_contents("online.lock", "false");
+	}
+	if(!file_exists("online")) {
+		file_put_contents("online", "");
+	}
+	
+	while(true) {
+		$lock_contents = file_get_contents("online.lock");
+		if($lock_contents === "true") {
+			msleep(100);
+		}
+		else {
+			file_put_contents("online.lock", "true");
+			break;
+		}
 	}
 	
 ?>
 
 <?php
 	
-	$_SESSION["nickname"] = $_POST["nickname"];
+	$file_contents = file_get_contents("online");
+	if($file_contents === "") {
+		file_put_contents("online", $newnick . data_sep . date("Y-m-d H:i:s"));
+		file_put_contents("online.lock", "false");
+		echo json_encode(array("success" => "true"));
+		exit();
+	}
 	
-	$sql = "update onlineusers set nickname = \"". $_POST["nickname"] . "\" where session_id = \"". session_id() . "\";";
-	$res = execQuery($sql);
+	$finish = array();
 	
-	$response = array();
+	$user_array = explode(user_sep, $file_contents);
+	foreach($user_array as $raw_data) {
+		$data = explode(data_sep, $raw_data);
+		if($data[0] === $oldnick) {
+			$data[0] = $newnick;
+		}
+		$finish[] = implode(data_sep, $data);
+	}
 	
-	if(!$res) {
-		$response["success"] = false;
-	} else { $response["success"] = true; }
+	file_put_contents("online", implode(user_sep, $finish));
+	file_put_contents("online.lock", "false");
 	
-	echo json_encode($response);
-	
-	mysql_close($conn);
+	echo json_encode(array("success" => "true"));
 	
 ?>
